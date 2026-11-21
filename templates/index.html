@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kitrion — портфолио учебных проектов на Python, Flask, HTML, CSS и JavaScript.">
+    <meta name="theme-color" content="#121314">
+    <title>Kitrion — Портфолио разработчика</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="page" id="home">
+        <nav class="nav" aria-label="Навигация">
+            <a class="brand" href="#home" aria-label="Kitrion, начало страницы">K<span class="brand-dot">.</span></a>
+            <div class="nav-links">
+                <a href="#about">Обо мне</a>
+                <a href="#skills">Навыки</a>
+                <a href="#feedback">Связаться</a>
+            </div>
+            <span class="nav-label">PORTFOLIO / 2026</span>
+        </nav>
+
+        <main>
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-meta"><span class="small-marker"></span> РАЗРАБОТКА · ЭКСПЕРИМЕНТЫ · ПРАКТИКА</div>
+                <h1 id="hero-title">Думаю.<br><span>Создаю.</span><br>Улучшаю.</h1>
+                <div class="hero-bottom">
+                    <p>Привет, я <strong>Kitrion</strong>. Изучаю разработку и превращаю идеи в работающие проекты — от Python-скриптов до интерактивных сайтов.</p>
+                    <a href="#skills" class="text-link">Смотреть проекты <span aria-hidden="true">↘</span></a>
+                </div>
+                <div class="hero-index">01 / 04</div>
+            </section>
+
+            <section class="section about" id="about" aria-labelledby="about-title">
+                <div class="section-kicker"><span>01 / ABOUT</span><span>КТО Я</span></div>
+                <div class="about-layout">
+                    <div class="about-copy">
+                        <h2 id="about-title">Обо <em>мне</em></h2>
+                        <p class="about-lead">Мне интересно не только написать код, но и сделать так, чтобы результат был понятным, полезным и аккуратно оформленным.</p>
+                        <p class="about-sub">В учебных проектах практикую Python и Flask, создаю сайты на HTML/CSS и пробую интерактивность на JavaScript. Постепенно усложняю задачи и собираю собственное портфолио.</p>
+                        <a class="subtle-link" href="https://github.com/Kitrusp0st" target="_blank" rel="noopener noreferrer">Мой GitHub <span aria-hidden="true">↗</span></a>
+                    </div>
+                    <figure class="portrait-block">
+                        <img src="{{ url_for('static', filename='img/kitrion-mark.svg') }}" alt="Абстрактный графический знак Kitrion вместо личной фотографии" width="480" height="520">
+                        <figcaption><span>FIG. 01</span><span>KITRION / PERSONAL MARK</span></figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="section skills" id="skills" aria-labelledby="skills-title">
+                <div class="section-kicker"><span>02 / SKILLS</span><span>ЧТО Я ИСПОЛЬЗУЮ</span></div>
+                <div class="skills-heading">
+                    <h2 id="skills-title">Навыки<span class="dim"> & проекты</span></h2>
+                    <p>Нажми на технологию, чтобы увидеть связанный с ней проект.</p>
+                </div>
+                <form method="post" action="/#project" class="skill-grid" aria-label="Выбор технологии">
+                    <button type="submit" name="skill" value="python" class="skill-tile {{ 'is-active' if selected_skill == 'python' else '' }}" aria-pressed="{{ 'true' if selected_skill == 'python' else 'false' }}">
+                        <span class="skill-number">01</span><span class="skill-label">Python</span><span class="skill-foot">Логика и алгоритмы <span aria-hidden="true">↗</span></span>
+                    </button>
+                    <button type="submit" name="skill" value="html" class="skill-tile {{ 'is-active' if selected_skill == 'html' else '' }}" aria-pressed="{{ 'true' if selected_skill == 'html' else 'false' }}">
+                        <span class="skill-number">02</span><span class="skill-label">HTML / CSS</span><span class="skill-foot">Структура и стиль <span aria-hidden="true">↗</span></span>
+                    </button>
+                    <button type="submit" name="skill" value="flask" class="skill-tile {{ 'is-active' if selected_skill == 'flask' else '' }}" aria-pressed="{{ 'true' if selected_skill == 'flask' else 'false' }}">
+                        <span class="skill-number">03</span><span class="skill-label">Flask</span><span class="skill-foot">Сервер и шаблоны <span aria-hidden="true">↗</span></span>
+                    </button>
+                    <button type="submit" name="skill" value="javascript" class="skill-tile {{ 'is-active' if selected_skill == 'javascript' else '' }}" aria-pressed="{{ 'true' if selected_skill == 'javascript' else 'false' }}">
+                        <span class="skill-number">04</span><span class="skill-label">JavaScript</span><span class="skill-foot">Интерактивность <span aria-hidden="true">↗</span></span>
+                    </button>
+                </form>
+                <div id="project" class="project-slot" aria-live="polite">
+                    {% if project %}
+                    <article class="project-panel">
+                        <div class="project-panel-top"><span>ВЫБРАННЫЙ ПРОЕКТ</span><span>{{ project.tag }}</span></div>
+                        <div class="project-panel-main">
+                            <div>
+                                <div class="project-overline">{{ project.skill }} / В РЕПОЗИТОРИИ</div>
+                                <h3>{{ project.name }}</h3>
+                                <p>{{ project.description }}</p>
+                                <div class="project-tools">{{ project.tools }}</div>
+                            </div>
+                            <a class="project-cta" href="{{ project.link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ project.action }} — {{ project.name }}">
+                                <span>{{ project.action }}</span><span aria-hidden="true">↗</span>
+                            </a>
+                        </div>
+                    </article>
+                    {% else %}
+                    <div class="project-placeholder"><span aria-hidden="true">↖</span><p>Выбери навык выше — здесь откроется проект.</p></div>
+                    {% endif %}
+                </div>
+            </section>
+
+            <section class="section feedback" id="feedback" aria-labelledby="feedback-title">
+                <div class="section-kicker"><span>03 / CONTACT</span><span>ОБРАТНАЯ СВЯЗЬ</span></div>
+                <div class="feedback-grid">
+                    <div>
+                        <h2 id="feedback-title">Есть идея?<br><span class="dim">Напиши.</span></h2>
+                        <p>Сообщение сохранится в локальном файле проекта. Форма не отправляет письма и не публикует адрес электронной почты на сайте.</p>
+                        <a href="https://github.com/Kitrusp0st" class="subtle-link" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+                    </div>
+                    <form action="{{ url_for('feedback') }}" method="post" class="feedback-form">
+                        <label for="email">Электронная почта</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" maxlength="254" autocomplete="email" required>
+                        <label for="text">Сообщение</label>
+                        <textarea id="text" name="text" rows="6" maxlength="3000" placeholder="Расскажи, что думаешь..." required></textarea>
+                        <button type="submit">Отправить сообщение <span aria-hidden="true">↗</span></button>
+                        {% if sent %}<p class="form-alert" role="status">Сообщение сохранено. Спасибо!</p>{% endif %}
+                        {% if error %}<p class="form-alert form-alert-error" role="alert">Проверь адрес почты и текст сообщения.</p>{% endif %}
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer"><span>KITRION © 2026</span><span>УЧЕБНОЕ ПОРТФОЛИО / KODLAND</span><a href="#home">Наверх ↑</a></footer>
+    </div>
+</body>
+</html>
